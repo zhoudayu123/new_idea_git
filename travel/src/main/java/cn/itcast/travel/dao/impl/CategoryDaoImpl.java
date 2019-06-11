@@ -13,6 +13,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public List<Category> findAll() {
+        System.out.println("测试git,提交版本更改");
         String sql = "select * from tab_category order by cid";
         List<Category> list = template.query(sql, new BeanPropertyRowMapper<Category>(Category.class));
         return list;
