@@ -1,0 +1,117 @@
+<!-- 头部 start -->
+<script src="js/getParameter.js"></script>
+
+<script>
+    function myfavorite(){
+        $.get("user/findUser",{},function (data) {
+            if(data!=null){
+                location.href = "myfavorite.html?uid="+data.uid;
+            }else {
+                alert("您尚未登陆，请先登陆！")
+                location.href = "login.html"
+            }
+        });
+    }
+
+    $(function () {
+
+        $("#search-button").click(function () {
+            var rname = $("#search_input").val();
+            var cid = getParameter("cid");
+            // alert(typeof (cid));
+            // alert(cid)
+            if(cid!=null){
+                location.href = "route_list.html?cid="+cid+"&rname="+rname;
+            }else {
+                location.href = "route_list.html?rname="+rname;
+            }
+
+        });
+
+
+        $.get("user/findUser",{},function (data) {
+            if(data!=null){
+                var msg = "欢迎回来，"+data.name;
+                $("#wel_span").html(msg);
+
+
+                $("#loginAndExit").html("退出");
+                $("#loginAndExit").prop("href","user/exit");
+            }else {
+                $("#loginAndExit").html("登陆");
+                $("#loginAndExit").prop("href","login.html");
+
+            }
+        })
+    });
+
+
+
+    $(function () {
+       $.get("category/findAll",function (data) {
+           $(data).each(function () {
+               var li = "<li><a href=\"route_list.html?cid="+this.cid+"\">"+this.cname+"</a></li>"
+               $("#category").append(li)
+           })
+           var li = "<li><a href=\"favoriterank.html\">收藏排行榜</a></li>";
+           $("#category").append(li)
+       })
+    });
+</script>
+
+    <header id="header">
+        <div class="top_banner">
+            <img src="images/top_banner.jpg" alt="">
+        </div>
+        <div class="shortcut">
+            <!-- 未登录状态  -->
+            <div class="login_out">
+                <!--<a href="login.html">登陆</a>-->
+                <a href="login.html" id="loginAndExit">登陆</a>
+                <a href="register.html">注册</a>
+            </div>
+            <!-- 登录状态  -->
+            <div class="login">
+                <a id="myfavorite"  onclick="myfavorite()" class="collection">我的收藏</a>
+                <span id="wel_span"></span>
+                <!--<a href="javascript:location.href='user/exit';">退出</a>-->
+            </div>
+        </div>
+        <div class="header_wrap">
+            <div class="topbar">
+                <div class="logo">
+                    <a href="/"><img src="images/logo.jpg" alt=""></a>
+                </div>
+                <div class="search">
+                    <input id="search_input" name="" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
+                    <a href="javascript:;" id="search-button" class="search-button">搜索</a>
+                </div>
+                <div class="hottel">
+                    <div class="hot_pic">
+                        <img src="images/hot_tel.jpg" alt="">
+                    </div>
+                    <div class="hot_tel">
+                        <p class="hot_time">客服热线(9:00-6:00)</p>
+                        <p class="hot_num">400-618-9090</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- 头部 end -->
+     <!-- 首页导航 -->
+    <div class="navitem">
+        <ul class="nav" id="category" >
+            <li class="nav-active" id="index"><a href="index.html">首页</a></li>
+            <!--<li><a href="route_list.html">门票</a></li>-->
+            <!--<li><a href="route_list.html">酒店</a></li>-->
+            <!--<li><a href="route_list.html">香港车票</a></li>-->
+            <!--<li><a href="route_list.html">出境游</a></li>-->
+            <!--<li><a href="route_list.html">国内游</a></li>-->
+            <!--<li><a href="route_list.html">港澳游</a></li>-->
+            <!--<li><a href="route_list.html">抱团定制</a></li>-->
+            <!--<li><a href="route_list.html">全球自由行</a></li>-->
+            <!--<li><a href="favoriterank.html">收藏排行榜</a></li>-->
+        </ul>
+    </div>
+    
